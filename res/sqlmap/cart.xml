@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cart">
+
+
+
+			<select id="selectAllCartStay_Id" resultClass="string" parameterClass="int">	
+					
+					
+					select stay_id from staycart
+							where cart_no = #data#
+					
+					 
+			</select>	
+
+			
+		
+
+
+
+			
+			
+			<select id="selectStay" resultClass="stayVO" parameterClass="string">
+			
+					select * from stay
+					where stay_id = #data#
+			
+			
+			</select> 
+			
+			
+			<select id="selectCartNo" resultClass="int" parameterClass="String">
+			
+			
+					select cart_no from cart
+						where mem_id = #data#
+			
+
+			
+			</select>
+			
+
+			<insert id="insertStayCart" parameterClass="staycartVO">
+			
+					insert into staycart
+						values(
+							#cart_no#,
+							#stay_id#
+						)
+			
+			</insert>
+
+
+			<select id="checkCart" parameterClass="string" resultClass="int">
+			
+				select count(*) from cart
+						where MEM_ID= #data#
+				
+			
+			
+			</select>
+
+
+			
+			<insert id="insertCart" parameterClass="string">
+				
+				 <selectKey keyProperty="cart_no" resultClass="int" > 
+          				  SELECT  CART_SEQ.NEXTVAL FROM DUAL 
+       			 </selectKey> 
+				
+				
+				insert into cart
+						values(
+							#cart_no#,
+							#mem_id#
+						)
+			</insert>
+
+
+	
+			<delete id="deleteStayCart" parameterClass="staycartVO">
+				
+				DELETE FROM STAYCART WHERE
+							STAY_ID = #stay_id# and
+							CART_NO = #cart_no#
+					
+			</delete>
+
+
+			<select id="stayIdCheck" parameterClass="staycartVO" resultClass="int">
+			
+				 select count(*) from staycart
+						where STAY_ID = #stay_id#
+						and cart_no=#cart_no#
+				
+			</select>
+
+
+</sqlMap>

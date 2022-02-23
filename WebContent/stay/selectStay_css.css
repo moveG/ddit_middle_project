@@ -1,0 +1,48 @@
+@charset "UTF-8";
+#s_h1{
+	font-size: 1.8em;
+	margin-left: 100px;
+}
+.s_container{
+	width: 1100px;
+	height: auto;
+	margin-left: -50px;
+	
+	
+}
+.s_a{
+	width: 80%;
+	height: 250px;
+}
+.s_box{
+	border-bottom: 1px solid lightgray;
+	border-top: 1px solid lightgray;
+	width: 900px;
+	height: 250px;
+	margin: auto;
+	cursor: pointer;
+	display: flex;
+	align-items: stretch;
+}
+.stay_img_div{
+	width: 35%;
+}
+.stay_img{
+	width: 270px;
+	height: 200px;
+	margin-top: 25px;
+	margin-left: 25px;
+	margin-right: 5px;
+}
+.stay_info_div{
+	width: 70%;
+	padding: 25px;
+}
+.base_btn{
+	margin-left: 100px;
+}
+
+
+
+
+

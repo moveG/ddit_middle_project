@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="reservation">
+	<select id="stayList" resultClass="stayVO2">
+		SELECT *
+		  FROM STAY
+	</select>
+	
+	<select id="stayDetail" parameterClass="String" resultClass="stayVO2">
+		SELECT *
+		  FROM STAY
+		 WHERE STAY_ID = #stay_id#
+	</select>
+			
+	<select id="coList" parameterClass="String" resultClass="CoVO2">
+		SELECT * 
+		  FROM CODETAIL
+		 WHERE CO_ID = (SELECT CO_ID
+		 				  FROM CO
+		 				 WHERE STAY_ID = #stay_id#)
+	</select>
+	
+	<select id="reserList" parameterClass="String" resultClass="reservationVO">
+		<![CDATA[
+		SELECT *
+		  FROM RESER
+		 WHERE STAY_ID = #stay_id#
+		]]>
+	</select>
+	
+	<select id="cartNo" parameterClass="String" resultClass="int">
+		SELECT CART_NO
+		  FROM CART
+		 WHERE MEM_ID = #mem_id#
+	</select>
+
+	<insert id="reservation" parameterClass="reservationVO">
+		INSERT ALL
+		INTO RESER(
+			RESER_NO,
+			MEM_ID,
+			TITEM_ID,
+			STAY_ID,
+			CART_NO,
+			RESER_PRICE,
+			RESER_DATE,
+			RESER_CKIN,
+			RESER_CKOUT
+		)VALUES(
+			RESER_SEQ.nextVal,
+			#mem_id#,
+			'titem1',
+			#stay_id#,
+			#cart_no#,
+			#reser_price#,
+			SYSDATE,
+			#reser_ckin#,
+			#reser_ckout#
+		)
+		INTO PEOPLE(
+			RESER_NO,
+			PEOPLE_A,
+			PEOPLE_C,
+			PEOPLE_B
+		)VALUES(
+			RESER_SEQ.nextVal,
+			#people_a#,
+			#people_c#,
+			#people_b#
+		)
+		SELECT * FROM DUAL
+		<selectKey keyProperty="reser_no" resultClass="String">
+			SELECT RESER_SEQ.currval
+			  FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<select id="reserCheck" parameterClass="reservationVO" resultClass="int">
+		<![CDATA[
+		SELECT COUNT(*)
+		  FROM RESER 
+		 WHERE STAY_ID = #stay_id#
+    	   AND #reser_ckin# <= RESER_CKOUT + 1
+    	   AND #reser_ckout# >= RESER_CKIN - 1
+		]]>
+	</select>
+	
+	<select id="reserButton" parameterClass="reservationVO" resultClass="int">
+		SELECT COUNT(*)
+		  FROM RESER
+		 WHERE STAY_ID = #stay_id#
+		   AND MEM_ID = #mem_id#
+		   AND RESER_CKOUT >= SYSDATE
+	</select>
+	
+	<select id="reserButton2" parameterClass="reservationVO" resultClass="reservationVO">
+		SELECT *
+		  FROM RESER
+		 WHERE STAY_ID = #stay_id#
+		   AND MEM_ID = #mem_id#
+		   AND RESER_CKOUT >= SYSDATE
+	</select>
+	
+	<select id="host_id" parameterClass="int" resultClass="String">
+		SELECT MEM_ID
+		  FROM HOST
+		 WHERE HOST_NO = #host_no#
+	</select>
+	
+	<update id="reserCancelPeople" parameterClass="String">
+		DELETE PEOPLE
+		 WHERE RESER_NO = #reser_no#
+	</update>
+	
+	<update id="reserCancel" parameterClass="String">
+		DELETE RESER
+		 WHERE RESER_NO = #reser_no#
+	</update>
+	
+	
+	
+	<!-- 석기현 예약번호에 맞는 숙소 상세 정보 출력 -->
+	<select id="selectReStayDetail" parameterClass="string" resultClass="stayVO2">
+	
+		select * from stay
+				where stay_id = (select stay_id from reser
+				where reser_no = #data#)
+	
+	
+	</select>
+	
+	<!-- 석기현 예약 번호에 맞는 예약 정보 출력 -->
+	<select id="selectReDetail" parameterClass="string" resultClass="reservationVO">
+	
+		select * from reser
+			where reser_no = #data#
+		
+	
+	</select>
+	
+	<!-- 석기현 예약 번호에 맞는 인원 출력 -->
+	<select id="RePeople" parameterClass="string" resultClass="int">
+	
+			select 
+				 (select people_a from people where reser_no=#data#)
+				+(select people_b from people where reser_no=#data#)
+				+(select people_c from people where reser_no=#data#) from dual
+							
+		
+	
+	</select>
+	
+	<!-- 석기현 예약 번호에 맞는 회원 정보 추출  -->
+	<select id="MemInfo" parameterClass="string" resultClass="memberVO1">
+	
+	
+		select mem_id, mem_name, mem_email,mem_add,mem_bir,mem_tel from member 
+			   where mem_id = 
+						(select mem_id from reser
+						where RESER_NO = #data#)
+	
+	</select>
+	
+	
+	
+	<!-- 석기현 호스트 번호에 의한 숙소 출력 -->
+	<select id="ChartStay" parameterClass="int" resultClass="reserVO" >
+	
+		select reser_no, reser_ckin, reser_price, stay_name
+			from reser A, stay B 
+			where B.STAY_ID = A.STAY_ID
+			and B.HOST_NO = #data#
+		
+	</select>
+	
+	
+	
+	
+	<select id="HostStay" parameterClass="int" resultClass="stayVO3">
+	
+	
+		select stay_id, stay_name from stay
+			where host_no = #data#
+	
+	
+	
+	</select>
+	
+	
+	<select id="Price" parameterClass="string" resultClass="int">
+	
+	
+			select sum(reser_price) from reser 
+					where stay_id = #data#
+	
+	
+	</select>
+	
+	
+ 	<select id="Last" resultClass="reserVO" parameterClass="int">
+	
+	<![CDATA[
+		SELECT * FROM
+			(SELECT A.RESER_CKIN, A.RESER_PRICE, B.STAY_ID, B.STAY_NAME
+			 FROM RESER A, STAY B, HOST C
+			WHERE C.HOST_NO = #data#
+			  AND C.HOST_NO = B.HOST_NO
+			  AND B.STAY_ID = A.STAY_ID
+			  AND A.RESER_CKIN > TO_DATE('20211001')
+			  AND A.RESER_CKIN < TO_DATE('20211031')
+			ORDER BY A.RESER_PRICE DESC)
+			WHERE ROWNUM =1 
+	]]>
+	</select> 
+	
+	
+	
+</sqlMap>

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.container {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 320px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+  padding: 20px;
+  margin: auto;
+  position: relative;
+  top : 10%;
+}
+.text-right{
+	float: left;
+	margin: 10px;
+	
+}
+#text-box{
+	margin: auto;
+}

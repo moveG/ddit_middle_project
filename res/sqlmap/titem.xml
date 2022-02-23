@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="titem">
+
+<!-- 여행상품 등록 -->
+	<insert id="insertTitme" parameterClass="titemVO">
+		insert into TITEM<!-- (TITEM_ID,
+						  HOST_NO,
+						  TITEM_DIV,
+						  TITEM_NAME,
+						  TITEM_INFO,
+						  TITEM_PRICE,
+						  TITEM_PEOPLE,
+						  TITEM_DATE) -->
+		values('titem'||titem_seq, #host_no#, #atch_file_id#, 
+		insert into TITEM(TITEM_ID,
+						  HOST_NO,
+						  TITEM_DIV,
+						  TITEM_NAME,
+						  TITEM_INFO,
+						  TITEM_PRICE,
+						  TITEM_PEOPLE,
+						  TITEM_DATE)
+		values('titem'||titem_seq, #host_no#, <!-- #atch_file_id#, --> 
+		insert into TITEM
+		values('titem'||TITEM_SEQ.NEXTVAL, #host_no#,  #atch_file_id#, 
+				#titem_div#, #titem_name#, #titem_info#, #titem_price#,
+				#titem_people#, sysdate)
+				
+		<!-- <selectKey keyProperty="titem_id" resultClass="string">
+		
+			select titem_seq.currval from dual
+			'stay'||STAY_SEQ.NEXTVAL
+		</selectKey> -->		
+	</insert>
+
+</sqlMap>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="event">
+
+	
+	<select id="selectAllEventBoard" resultClass="eventVO">
+	
+			select * from event
+			order by 1
+	</select>
+
+
+	
+	
+	<select id="selectEventBoard" resultClass="eventVO" parameterClass="int">
+	
+			select * from event
+			where event_no = #data#
+			
+				
+	</select>
+
+	
+	<insert id="insertEventBoard" parameterClass="eventVO">
+	
+			insert into event
+			values(
+			
+			EVENT_SEQ.NEXTVAL,
+			#admin_id#,
+			#event_title#,
+			sysdate,
+			#event_content#,
+			sysdate
+			)	
+	
+	
+	</insert>
+
+
+
+
+</sqlMap>

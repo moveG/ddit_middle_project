@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gurlist">
+	<select id="gurList" resultClass="gurlistVO">
+		SELECT A.*, C.ATCH_FILE_ID, C.STAY_NAME
+		  FROM RESER A, MEMBER B, STAY C
+		 WHERE A.MEM_ID = B.MEM_ID
+		   AND A.STAY_ID = C.STAY_ID
+		   AND A.MEM_ID = #mem_id#
+	</select>
+	
+</sqlMap>

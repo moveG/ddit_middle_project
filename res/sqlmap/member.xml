@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="member">
+
+	<!-- 중복 아이디 체크  -->
+	<select id="memberCheck" parameterClass="String" resultClass="String">
+	
+		select mem_id from member where mem_id = #mem_id#
+	
+	</select>
+	
+	<!-- 게스트 회원가입 -->
+	<insert id="guestInsert" parameterClass="memberVO">
+		
+		insert into member
+		(MEM_ID, MEM_NAME, MEM_PASS, MEM_EMAIL, MEM_ADD, MEM_BIR, MEM_TEL
+		<!-- <isNotEmpty property="atch_file_id">  
+		    ,ATCH_FILE_ID
+		</isNotEmpty>  -->
+		,MEM_ZIP)
+		values(#mem_id#, #mem_name#, #mem_pass#, #mem_email#, #mem_add#, #mem_bir#, #mem_tel#
+		<!-- <isNotEmpty property="atch_file_id">
+			,#atch_file_id#
+		</isNotEmpty> -->
+		,#mem_zip#)
+		
+		<selectKey keyProperty="mem_id" resultClass="String">
+			select mem_id from member where mem_id = #mem_id#
+		</selectKey>
+	</insert>
+	
+	<!-- 호스트 회원가입 -->
+	<insert id="hostInsert" parameterClass="memberVO">
+		
+		insert all 
+		into member
+		(MEM_ID, MEM_NAME, MEM_PASS, MEM_EMAIL, MEM_ADD, MEM_BIR, MEM_TEL
+		<!-- <isNotEmpty property="atch_file_id">  
+		    ,ATCH_FILE_ID
+		</isNotEmpty>  -->
+		,MEM_ZIP)
+		values(#mem_id#, #mem_name#, #mem_pass#, #mem_email#, #mem_add#, #mem_bir#, #mem_tel#
+		<!-- <isNotEmpty property="atch_file_id">
+			,#atch_file_id#
+		</isNotEmpty> -->
+		,#mem_zip#)
+		into host
+		values(host_seq.nextval, #mem_id#)
+		select * from dual
+		
+		<selectKey keyProperty="mem_id" resultClass="String">
+			select mem_id from host where mem_id = #mem_id#
+		</selectKey>
+	</insert>
+	
+	<!-- 로그인  -->
+	<select id="loginCheck" parameterClass="memberVO" resultClass="int">
+	
+		select count(*) from member
+		 where mem_id = #mem_id#
+		   and mem_pass = #mem_pass#
+	
+	</select>
+	
+	<!-- 세션 저장을 위한 게스트 호스트 구분 -->
+	<select id="memberDivision" parameterClass="String" resultClass="hostVO">
+		
+		select * from host
+		 where mem_id = #mem_id#
+		
+	</select>
+	
+	<!-- ID찾기  -->
+	<select id="idFind" parameterClass="memberVO" resultClass="String">
+		select mem_id from member
+		 where mem_name = #mem_name#
+		   and mem_tel = #mem_tel#
+	</select>
+	
+	<!-- PW찾기 (정보 확인) -->
+	<select id="pwFind" parameterClass="memberVO" resultClass="memberVO">
+		select mem_id,
+		       mem_tel
+		  from member
+		 where mem_id = #mem_id#
+		   and mem_tel = #mem_tel#
+		   and mem_bir = #mem_bir#
+	</select>
+	
+	<!-- 임시 비밀번호 업데이트  -->
+	<update id="tampPassword" parameterClass="memberVO" >
+		update member
+		set mem_pass = #mem_pass#
+		where mem_id = #mem_id#
+		  and mem_tel = #mem_tel#	
+	</update>
+
+
+
+	<!-- 메뉴 호스트 판별 -->
+	<select id="checkHost" parameterClass="string" resultClass="int">
+	
+		select count(*) from host
+			where mem_id = #data#
+	
+	
+	</select>
+
+
+	<insert id="insertCart" parameterClass="string">
+          				  
+				
+				insert into cart
+						values(
+							CART_SEQ.NEXTVAL,
+							#mem_id#
+						)
+	
+	</insert>
+
+
+	<!-- 회원 판별 --> 
+	<select id="selectMember" resultClass="int" parameterClass="string">
+	
+			select count(*) from member
+				   where mem_id =#data#
+	
+	</select>
+
+
+	
+	<!--석기현 회원정보 출력 -->
+	<select id="selectMemberList" resultClass="memberVO" parameterClass="string">
+	
+	
+		select 
+			mem_id,
+			mem_name,
+			mem_pass,
+			mem_email,    
+			mem_add,     
+			mem_bir,     
+			mem_tel     
+		
+		
+		from member
+			where mem_id = #data#
+	
+	
+	
+	
+	</select>
+
+
+	<!--석기현 회원정보 수정 -->			
+	<update id="updateMember" parameterClass="memberVO">
+	
+		update member
+		set mem_name = #mem_name#,
+			mem_email     = #mem_email#,
+			mem_add       = #mem_add#,	
+			mem_tel       = #mem_tel#
+			
+		 
+		 where mem_id = #mem_id#
+		
+	
+	
+	</update>
+
+
+
+
+
+
+</sqlMap>

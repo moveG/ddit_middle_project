@@ -1,0 +1,98 @@
+@charset "UTF-8";
+.container{
+	background-color: #e2f5f5;
+}
+#header{
+	background-color: white;
+}
+#foot{
+	background-color: white;
+}
+#content_box{
+	padding-left: 60px;
+}
+#content_box_container{
+	height: 500px;
+}
+.form_container{
+	width: auto;
+	margin: auto;
+	
+}
+.control-label {
+	width: 100px;
+	/* text-align: right; */
+	/* margin-top: 11px; */
+	font-weight: bold;
+}
+.form-control .btn-lg{
+	margin: 5px;
+	height: 30px;
+	margin-left: 15px;
+	border-radius: 12px;
+	border: 2px solid lightgray;
+	padding-left: 10px;
+	outline: none;
+}
+.idselect{
+	width: 400px;
+	height: 400px;
+	margin-bottom: 50px;
+	/* border: 3px solid lightgray; */
+	background-color: white;
+	margin: auto;
+	margin-top: 90px;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.f_h2{
+	margin-left: 60px;
+}
+.form-group{
+	display: flex;
+	margin-bottom: 10px;
+	
+}
+#aa{
+	margin-left: 60px;
+}
+.f_btn{
+	width: 300px;
+    height: 40px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border:1px solid lightseagreen;
+    background: lightseagreen;
+    color : white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 50px;
+  /*   font-size: 1.1em; */
+}
+.col-sm-offset-2{
+	margin-top: 15px;
+}
+.pwselect{
+	padding-left: 60px;
+}
+.pw{
+	display: flex;
+	margin: 3px;
+}
+.btn-lg{
+	width: 300px;
+    height: 40px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border:1px solid lightseagreen;
+    background: lightseagreen;
+    color : white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: -10px;
+}
+#pwresult{
+	margin-left: 60px;
+}

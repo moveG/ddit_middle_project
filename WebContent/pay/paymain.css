@@ -1,0 +1,91 @@
+@charset "UTF-8";
+h1{
+	font-size: 3.0em;
+	margin-bottom: 50px;
+}
+h2{
+	font-size: 2.2em;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+h3{
+	font-size: 1.5em;
+}
+.p{
+	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 1.3em;
+}
+span{
+	font-size: 0.8em;
+}
+
+/*예약 정보*/
+#content_box_container{
+	padding: 20px;
+	padding-left: 100px;
+	height: 1000px;
+}
+#pay_container{
+	display: flex;
+	align-items: stretch;
+	height: 1000px;
+}
+#reser_info_container{
+	width: 720px;
+	word-break:break-all;
+}
+.reser_info_line{
+	border-top: 2px solid gray;
+	padding-bottom: 20px;
+}
+
+/*결제 박스*/
+#pay_info_container{
+	width: 600px;
+}
+#pay_info_box{
+	border: 2px solid gray;
+	border-radius: 10px;
+	width: 500px;
+	height: auto;
+	position: sticky;
+	top: 50px;
+	margin: auto;
+	padding: 10px;
+}
+.pay_info_box_line{
+	width: 500px;
+	margin: auto;
+}
+#pay_info_box_line1{
+	border-bottom: 1px solid gray;
+	height: 200px;
+	word-break:break-all;
+	display: flex;
+	align-items: stretch;
+	
+}
+#pay_info_box_line2{
+	height: 50px;
+	text-align: left;
+}
+#pay_stay_img{
+	width: 200px;
+	height: 170px;
+	margin-top: 10px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+#aaa{
+	margin-top: 10px;
+	margin-left: 15px;
+	display: inline-block;
+	margin-right: 350px;
+}
+
+
+
+
+

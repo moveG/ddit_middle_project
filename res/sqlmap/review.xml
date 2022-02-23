@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="review">
+	<select id="hostCheck" parameterClass="reservationVO" resultClass="int">
+		SELECT COUNT(*)
+		  FROM STAY A, HOST B
+		 WHERE A.HOST_NO = B.HOST_NO
+		   AND B.MEM_ID = #mem_id#	
+		   AND A.STAY_ID = #stay_id#
+	</select>
+
+	<select id="reserCheck" parameterClass="reservationVO" resultClass="int">
+		SELECT COUNT(*)
+		  FROM RESER
+		 WHERE MEM_ID = #mem_id#	
+		   AND STAY_ID = #stay_id#
+	</select>
+	
+	<select id="writerCheck" parameterClass="reviewVO" resultClass="int">
+		SELECT COUNT(*)
+  		  FROM REVIEW A, RESER B, MEMBER C
+		 WHERE A.RESER_NO = B.RESER_NO
+   		   AND B.MEM_ID = C.MEM_ID
+   		   AND C.MEM_ID = #mem_id#
+		   AND B.STAY_ID = #stay_id#
+		   AND REVIEW_NO = #review_no#
+	</select>
+	
+	<select id="reviewList" resultClass="reviewVO">
+		SELECT A.*, B.MEM_ID
+  		  FROM REVIEW A, RESER B
+ 		 WHERE A.RESER_NO = B.RESER_NO
+ 		   AND B.STAY_ID = #stay_id#
+		 ORDER BY A.REVIEW_NO DESC
+	</select>
+		
+	<update id="insertReview" parameterClass="reviewVO">
+		INSERT INTO REVIEW
+		VALUES(
+			REVIEW_SEQ.nextval,
+			#reser_no#, 
+			#review_content#, 
+			SYSDATE,
+            SYSDATE
+		)
+	</update>
+	
+	<update id="updateReview" parameterClass="reviewVO">
+		UPDATE REVIEW
+		   SET REVIEW_CONTENT = #review_content#,
+		       REVIEW_MOD = SYSDATE
+		 WHERE REVIEW_NO = #review_no#
+	</update>
+	
+	<delete id="deleteReview" parameterClass="int">
+		DELETE REVIEW
+		 WHERE REVIEW_NO = #review_no#
+	</delete>
+	
+	<select id="listCount" resultClass="int">
+		SELECT COUNT(*)
+		  FROM REVIEW
+	</select>
+	
+	<select id="replyList" parameterClass="int" resultClass="reviewAVO">
+		SELECT *
+		  FROM REVIEWA
+		 WHERE REVIEW_NO = #review_no#
+	</select>
+	
+	<update id="insertReply" parameterClass="reviewAVO">
+		INSERT INTO REVIEWA
+		VALUES(
+			#review_no#,
+			#reviewa_content#,
+			SYSDATE
+		)
+	</update>
+	
+	<update id="updateReply" parameterClass="reviewAVO">
+		UPDATE REVIEWA
+		   SET REVIEWA_CONTENT = #reviewa_content#,
+		       REVIEWA_DATE = SYSDATE
+		 WHERE REVIEW_NO = #review_no#
+	</update>
+	
+	<delete id="deleteReply" parameterClass="int">
+		DELETE REVIEWA
+		 WHERE REVIEW_NO = #review_no#
+	</delete>
+</sqlMap>

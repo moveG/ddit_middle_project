@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	
+	ghcheck = null;
+	
+	$('#guest').on('click', function(){
+		
+		ghcheck = $(this).attr("name");
+		
+		location.replace('memberJoin.jsp?type=guest');
+		
+	})
+	
+	$('#host').on('click', function(){
+		
+		ghcheck = $(this).attr("name");
+		
+		location.replace('memberJoin.jsp?type=host');
+		
+	})
+	
+	
+	  
+})
+
+</script>
+
+
+
+</head>
+<body>
+	
+	<div>
+	
+		<a  name="guest" id="guest" value="guest">게스트 회원가입</a>
+		<!-- href = "../memberJoin/memberJoin.html" -->
+	</div>
+	
+	
+	<div>
+	
+		<a name="host" id="host" value="host">호스트 회원가입</a>
+		<!-- href = "../memberJoin/memberJoin.html" -->
+	</div>
+	
+</body>
+</html>

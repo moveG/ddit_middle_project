@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="mytrip">
+
+
+	<!-- 나만의 여행지 등록  -->
+	<insert id="myTripInsert" parameterClass="mytripVO">
+		insert into mytrip
+		values(tr_seq.nextval, #mem_id#, #atch_file_id#, #mytrip_title#, #mytrip_content#
+		       , sysdate, 0, #stay_id#)
+	</insert>
+
+	<!-- 나만의 여행지 출력 -->
+	<select id="myTripSelect" resultClass="mytripVO">
+		select * from mytrip
+
+	</select>
+
+	<!-- 나만의 여행지 삭제 -->
+	<delete id="myTripDelete" parameterClass="int">
+		delete from mytrip
+		where mytrip_no = #mytrip_no#
+
+	</delete>
+
+	<!-- 따라가기 버튼 상품디테일 이동을 위해 stay_id로 atch_file_id 검색  -->
+	<select id="myTripFollow" parameterClass="String" resultClass="long" >
+		select atch_file_id from stay
+		 where stay_id = #stay_id#
+
+	</select>
+
+	<!-- 추천수 입력 -->
+	<update id="myTripSuggestion" parameterClass="int">
+		update mytrip
+		set mytrip_rec = (select mytrip_rec from mytrip
+		where mytrip_no = #mytrip_no#) + 1
+		where mytrip_no = #mytrip_no#
+	</update>
+
+	<!-- 추천수 조회 -->
+	<select id="suggestionSelect" parameterClass="int" resultClass="int">
+		select mytrip_rec from mytrip
+		where mytrip_no = #mytrip_no#
+	</select>
+
+	<!-- 댓글 리스트 가져오기  -->
+	<select id="selectComment" parameterClass="int" resultClass="mytripcommentVO">
+		select * from mytripc
+		where mytrip_no = #mytrip_no#
+	</select>
+
+	<!-- 댓글 등록 -->
+	<insert id="insertComment" parameterClass="mytripcommentVO">
+		insert into mytripc
+		values(#mytrip_no#, #mem_id#, #mytripc_content#, sysdate, TR_C_SEQ.nextval, 0, 0)
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterClass="mytripcommentVO">
+		update mytripc
+		   set mytripc_content = #mytripc_content#
+		 where mytripc_no = #mytripc_no#
+	</update>
+
+	<!-- 댓글 삭제 -->
+	<delete id="commentDelete" parameterClass="int">
+		delete from mytripc
+		where mytripc_no = #mytripc#
+	</delete>
+
+	<!-- 구매 이력 조회 -->
+	<select id="myTripReservation" parameterClass="String" resultClass="mytripVO">
+		select a.*,b.stay_name from reser a, stay b
+		 where a.mem_id = #mem_id#
+ 		   and a.stay_id = b.stay_id
+	</select>
+</sqlMap>

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+.event_img{
+	width : 300px;
+	height : 200px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 8px;
+}
+.event_box{
+	
+}
+.event{
+	float: left;
+	margin : 27px;
+	text-align: center;
+	margin-bottom: 100px;
+	cursor: pointer;
+}
+#content_box_container{
+	padding-left: 15px;
+}
+.e_h3{
+	float: left;
+	/* text-decoration: underline; */
+}	
+.p{
+	float: left;
+	font-size: 1.1em;
+}
+#event_img4{
+	filter: grayscale(100%);
+}
+#event_img5{
+	filter: grayscale(100%);
+}

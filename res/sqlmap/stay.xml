@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="stay">
+
+	
+	
+	<select id="selectAllStay" resultClass="stayVO" parameterClass="int">
+	
+		select * from stay
+		where HOST_NO =#data#
+	
+	
+	</select>
+	
+	
+	<select id="selectCoDetail" resultClass="codetailVO" parameterClass="string">
+	
+		select * from codetail
+		where co_id = (select co_id from co
+        where stay_id=#data#)
+	
+	
+	</select>
+	
+	<delete id="deleteCodetail" parameterClass="string">
+	
+		delete from codetail
+		where co_id=#data#
+	
+	</delete>
+	
+	<delete id="deleteStay" parameterClass="string">
+	
+		delete from stay
+		where stay_id=#data#
+	
+	</delete>
+	
+	<delete id="deleteCo" parameterClass="string">
+	
+		delete from co
+		where stay_id=#data#
+	
+	</delete>
+	
+	<delete id="deleteRe" parameterClass="string">
+	
+		delete from RESER
+		where stay_id=#data#
+	
+	</delete>
+	
+	
+	
+	
+	
+	<delete id="deletePe" parameterClass="string">
+	
+		delete from PEOPLE
+		where RESER_NO = #data#
+	
+	</delete>
+	
+	<select id="selectRE">
+	
+		select RESER_NO from RESER
+		where stay_id  = #data#
+	
+	</select>
+	
+	
+	<delete id="deleteStayCart" parameterClass="string">
+	
+		delete from STAYCART 
+		where stay_id = #data#
+		
+	
+	</delete>
+	
+	
+	<select id="selectStay" parameterClass="string" resultClass="stayVO">
+	
+	
+		select * from stay
+		where stay_id = #data#
+	
+	
+	
+	</select>
+	
+	
+	
+	
+	<select id="selectStayName" parameterClass="int" resultClass="staycalVO">
+
+	
+	
+	<!-- select stay_name, reser_ckin,reser_ckout from
+	(select stay_id, reser_ckin, reser_ckout from reser
+	where reser_no =
+	(select reser_no from reser
+	where stay_id = #data#)) a, stay b
+	where a.stay_id = b.stay_id -->
+
+	SELECT B.STAY_NAME, C.RESER_CKIN, C.RESER_CKOUT
+	  FROM HOST A, STAY B, RESER C
+	    WHERE A.HOST_NO = #data#
+	      AND A.HOST_NO = B.HOST_NO
+	      AND B.STAY_ID = C.STAY_ID
+		
+	
+	
+	</select>
+	
+	
+	<select id="selectHostStayId" parameterClass="int" resultClass="string">
+	
+			select stay_id from stay
+					where HOST_NO = #data#
+			
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+		<insert id="insertStay" parameterClass="stayVO">
+	
+	
+	    <selectKey keyProperty="stay_id" resultClass="string" > 
+            SELECT  'stay'||STAY_SEQ.NEXTVAL FROM DUAL 
+        </selectKey> 
+
+		insert into stay
+		values(#stay_id#,
+		#host_no#,
+		#atch_file_id#,
+		#stay_name#, 
+		#stay_info#, 
+		#stay_price#, 
+		#stay_add#,
+		#stay_pnum#,
+		sysdate)
+		
+		
+		</insert>
+		
+		<insert id="insertCoDetail" parameterClass="codetailVO">
+
+
+
+	    <selectKey keyProperty="co_id" resultClass="string" > 
+            SELECT 'codetail'||CODEDAIL_SEQ.NEXTVAL FROM DUAL 
+        </selectKey> 
+
+			insert into codetail
+			values(#co_id#,
+		
+					#co_hair#,
+					#co_bath#,
+					#co_bidet#,
+					#co_water#,
+					#co_wash#,
+					#co_bed#,
+					#co_internet#,
+					#co_tem#,
+					#co_emer#,
+					#co_co#,
+					#co_re#,
+					#co_et#,
+					#co_gas#,
+					#co_rice#,
+					#co_park#
+
+			)
+		
+		</insert>
+		
+		<insert id="insertCo">
+		
+			insert into CO
+			values(#co_id#,
+				   #stay_id#)
+		
+		
+		</insert>
+		
+
+		 <update id="updateStay" parameterClass="stayVO">
+	
+		
+		update stay 
+		set          
+	                  
+					ATCH_FILE_ID  =  #atch_file_id#,
+					STAY_NAME	=	#stay_name#, 
+					STAY_INFO	=	#stay_info#, 
+					STAY_PRICE	=	#stay_price#, 
+					STAY_ADD	=	#stay_add#,
+					STAY_PNUM	=	#stay_pnum#,
+					STAY_DATE	=    sysdate	
+						
+	
+		where STAY_ID = #stay_id#
+	
+	
+		</update>
+
+
+		<update id="updateCoDetail" parameterClass="codetailVO">
+
+			update CODETAIL 
+			set 		
+					CO_HAIR		=	#co_hair#,
+					CO_BATH		=	#co_bath#,
+					CO_BIDET	=	#co_bidet#,
+					CO_WATER	=	#co_water#,
+					CO_WASH		=	#co_wash#,
+					CO_BED		=	#co_bed#,
+					CO_INTERNET	=	#co_internet#,
+					CO_TEM		=	#co_tem#,
+					CO_EMER		=	#co_emer#,
+					CO_CO		=	#co_co#,
+					CO_RE		=	#co_re#,
+					CO_ET		=	#co_et#,
+					CO_GAS		=	#co_gas#,
+					CO_RICE		=	#co_rice#,
+					CO_PARK		=	#co_park#
+				
+				where CO_ID = #co_id#
+		</update> 
+
+
+
+		
+
+
+
+
+</sqlMap>

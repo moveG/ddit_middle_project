@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<script src="/FireMoth/billboard/billboard.js"></script>
+<link rel="stylesheet" href="/FireMoth/billboard/billboard.css">
+<link rel="stylesheet" href="/FireMoth/billboard/insight.min.css">
+
+
+<script>
+
+var chart = bb.generate({
+    bindto: "#chart",
+    data: {
+        type: "bar",
+        columns: [
+            ["data1", 30, 200, 100, 170, 150, 250],
+            ["data2", 130, 100, 140, 35, 110, 50]
+        ]
+    }
+});
+
+
+</script>
+
+<title>Insert title here</title>
+</head>
+<body>
+<div id="chart"></div>
+</body>
+</html>

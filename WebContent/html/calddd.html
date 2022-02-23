@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href='/FireMoth/css/main.css' rel='stylesheet'/>
+    	<script src='/FireMoth/js/main.js'></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth'
+			});
+				calendar.render();
+			});
+   		</script>
+   		<style>
+   			#calendar{
+   				width : 500px;
+   				height : 500px;
+   			}
+   		</style>
+<title>Insert title here</title>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>
